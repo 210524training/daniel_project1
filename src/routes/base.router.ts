@@ -20,7 +20,6 @@ export async function logout(req: express.Request, res: express.Response): Promi
     const { ID } = req.session.user;
     req.session.destroy(() => {
       console.log(`${ID} logged out`);
-      res.sendFile(path.resolve(__dirname, '../views/index.html'));
     });
   }
   res.sendFile(path.resolve(__dirname, '../views/index.html'));
