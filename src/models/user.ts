@@ -6,3 +6,9 @@ export default class User {
     public Role = 'employee' || 'supervisor' || 'benco' || 'department head',
   ) {}
 }
+
+export interface Fund {
+  AmountAvailable: number,
+  AmountPending: number,
+  AmountAwarded: number,
+}
