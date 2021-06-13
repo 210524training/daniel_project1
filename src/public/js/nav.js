@@ -38,7 +38,7 @@ async function sendLogin() {
     method: 'POST',
   });
   const data = await response.json();
-  console.log(data);
+  console.log(data.Role);
   sessionStorage.setItem('user', JSON.stringify(data));
-  window.location.href = 'http://localhost:3000';
+  window.location.href = 'http://localhost:3000/employee';
 }
