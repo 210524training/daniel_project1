@@ -13,9 +13,16 @@ employRouter.get('/', async (req, res) => {
 
 employRouter.get('/reim/json', async (req, res) => {
   if(req.session.user) {
-    // dao
-    res.json({ data: 'This is sending back JSON' });
-    throw new Error('Something went wrong!');
+    if(req.session.user.Role === 'supervisor') {
+      const data = await userDao.getPreApproval('DS_PreApproval');
+      res.json({ res: data });
+    } else if(req.session.user.Role === 'benco') {
+      const data = await userDao.getPreApproval('Benco_PreApproval');
+      res.json({ res: data });
+    } else if(req.session.user.Role === 'department head') {
+      const data = await userDao.getPreApproval('DH_PreApproval');
+      res.json({ res: data });
+    }
   }
 });
 

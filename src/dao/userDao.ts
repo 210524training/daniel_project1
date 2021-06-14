@@ -1,6 +1,7 @@
 /* eslint-disable quote-props */
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import dynamo from './connection/connectionService';
+import Reim from '../models/reim';
 import User from '../models/user';
 import Detail from '../models/detail';
 
@@ -51,6 +52,27 @@ class UserDao {
       return 'success';
     }
     return 'failed';
+  }
+
+  async getPreApproval(role:string): Promise<Reim[]> {
+    const params = {
+      TableName: 'Reimbursement',
+      KeyConditionExpression: '#T = :u',
+      FilterExpression: '#R = :a',
+      ExpressionAttributeNames: {
+        '#T': 'Thing',
+        '#R': role,
+      },
+      ExpressionAttributeValues: {
+        ':u': 'reimbursement',
+        ':a': 'waiting',
+      },
+    };
+    const data = await this.docClient.query(params).promise();
+    if(data.Items) {
+      return data.Items as Reim[];
+    }
+    return [];
   }
 }
 

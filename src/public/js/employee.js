@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-alert */
 const data1 = sessionStorage.getItem('user');
@@ -31,6 +32,37 @@ async function sendReimRequest() {
       gradingFormat: gradingFormat.value,
       justification: justification.value,
       approverEmail: approverEmail.value,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'PUT',
+  });
+  // onst returnedData = await response.json();
+  alert('Success!');
+  window.location.href = 'http://localhost:3000/employee';
+}
+
+async function getPreApproval() {
+  const response = await fetch('http://localhost:3000/employee/reim/json', {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'GET',
+  });
+  const obj = await response.json();
+  document.getElementById('preApprovals').innerHTML += JSON.stringify(obj.res, 2, '\n');
+}
+
+async function preReim() {
+  const reimID = document.getElementById('reimID');
+  const approve = document.getElementById('approveOrNot');
+  const reason = document.getElementById('reason');
+  const response = await fetch('http://localhost:3000/employee/prereim/', {
+    body: JSON.stringify({
+      reimID: reimID.value,
+      approve: approve.value,
+      reason: reason.value,
     }),
     headers: {
       'Content-Type': 'application/json',

@@ -1,6 +1,5 @@
 import express, { Router } from 'express';
 import path from 'path';
-import userRouter from './user.router';
 import loginRouter from './login.router';
 import employRouter from './employ.router';
 
@@ -30,6 +29,6 @@ export async function logout(req: express.Request, res: express.Response): Promi
 baseRouter.use('/login', loginRouter);
 baseRouter.use('/employee', employRouter);
 baseRouter.use('/logout', logout);
-baseRouter.use('/api/v1/users', userRouter);
+// baseRouter.use('/api/v1/users', userRouter);
 
 export default baseRouter;

@@ -19,7 +19,6 @@
     <div>
       <form onsubmit="sendReimRequest(); return false">
         <div class="form-group">
-
           <label for="eventType">Event Type:</label>
           <input class="form-control" id="eventType" name='eventType'>
 
@@ -46,13 +45,41 @@
 
           <label for="approverEmail">Approver Email (optional):</label>
           <input class="form-control" id="approverEmail" name='approverEmail'>
-
           <!-- <label for="interestedParties">Interested Parties:</label>
           <input class="form-control" id="interestedParties" name='interestedParties'> -->
-
           <input type="submit" class="btn btn-primary col-sm-2" value="Submit">
+        </div>
       </form>
     </div>
+
+    <hr>
+
+    <div id="preApprovals">
+      <h3>Pre-Approvals</h3>
+      <input type="submit" onclick="getPreApproval()" class="btn btn-primary col-sm-2" value="Fetch">
+    </div>
+
+    <hr>
+
+    <div>
+      <h3>Approve Pre-Approvals</h3>
+      <form onsubmit="preReim(); return false">
+        <div class="form-group">
+          <label for="reimID">Reimbursment ID:</label>
+          <input class="form-control" id="reimID" name='reimID'>
+
+          <label for="approveOrNot">Approve or Deny</label>
+          <input type="radio" id="approveOrNot" name="approveOrNot" value="approve">
+          <input type="radio" id="approveOrNot" name="approveOrNot" value="reject">
+
+          <label for="reason">Reason:</label>
+          <input class="form-control" id="reason" name='reason'>
+
+          <input type="submit" class="btn btn-primary col-sm-2" value="Submit">
+        </div>
+      </form>
+    </div>
+
     <script src="js/nav.js"></script>
     <script src="js/userinfo.js"></script>
   </body>
