@@ -79,7 +79,7 @@ async function getReimEmployApproval() {
 async function updateEmpApproval() {
   const reimID = document.getElementById('reimID3');
   const approve = document.getElementById('empApprove');
-  const response = await fetch('http://localhost:3000/employee//', {
+  const response = await fetch('http://localhost:3000/employee/', {
     body: JSON.stringify({
       reimID: reimID.value,
       approve: approve.value,
@@ -91,6 +91,23 @@ async function updateEmpApproval() {
   });
   alert(response.toString());
   window.location.href = 'http://localhost:3000/employee';
+}
+
+async function postGrade() {
+  const reimID = document.getElementById('reimID5');
+  const grade = document.getElementById('grade');
+  const response = await fetch('http://localhost:3000/employee/grade', {
+    body: JSON.stringify({
+      reimID: reimID.value,
+      grade: grade.value,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'PATCH',
+  });
+  alert(response.toString());
+  window.location.href = 'http://localhost:3000/employee/grade';
 }
 
 async function preReim() {

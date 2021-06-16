@@ -52,6 +52,22 @@
         </div>
       </form>
     </div>
+    <div>
+      <hr>
+      <h3>Grade Submission</h3>
+      <form onsubmit="postGrade(); return false">
+        <div class="form-group">
+          <label for="reimID5">Reimbursment ID:</label>
+          <input class="form-control" id="reimID5" name='reimID5'>
+          <br/>
+          <label for="grade">Grade:</label>
+          <input class="form-control" id="grade" name='grade'>
+          <br/>
+          <input type="submit" class="btn btn-primary col-sm-2" value="Submit">
+        </div>
+      </form>
+    </div>
+    <hr>
     <div id="empApproval">
       <h3>Reimbursments that needs Employee Approvals due to change in reward amount</h3>
       <input type="submit" onclick="getReimEmployApporval()" class="btn btn-primary col-sm-2" value="Fetch">

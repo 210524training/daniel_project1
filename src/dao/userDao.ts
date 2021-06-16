@@ -66,6 +66,26 @@ class UserDao {
     return 'failed';
   }
 
+  async postGrade(id:string, grade:string): Promise<void> {
+    const params = {
+      TableName: 'Reimbursement',
+      Key: {
+        'Thing': 'reimbursement',
+        'ID': id,
+      },
+      UpdateExpression: 'set  #W=:c',
+      ExpressionAttributeNames: {
+        '#W': 'GradeSubmission',
+      },
+      ExpressionAttributeValues: {
+        ':c': grade,
+      },
+      ReturnValues: 'UPDATED_NEW',
+    };
+    const returned = await this.docClient.update(params).promise();
+    console.log(returned);
+  }
+
   async getPreApproval(role:string): Promise<Reim[]> {
     const params = {
       TableName: 'Reimbursement',
@@ -165,6 +185,26 @@ class UserDao {
       ExpressionAttributeValues: {
         ':c': change,
         ':r': reason,
+      },
+      ReturnValues: 'UPDATED_NEW',
+    };
+    const returned = await this.docClient.update(params).promise();
+    console.log(returned);
+  }
+
+  async updateToWaiting(id:string, who:string): Promise<void> {
+    const params = {
+      TableName: 'Reimbursement',
+      Key: {
+        'Thing': 'reimbursement',
+        'ID': id,
+      },
+      UpdateExpression: 'set  #W=:c',
+      ExpressionAttributeNames: {
+        '#W': who,
+      },
+      ExpressionAttributeValues: {
+        ':c': 'waiting',
       },
       ReturnValues: 'UPDATED_NEW',
     };

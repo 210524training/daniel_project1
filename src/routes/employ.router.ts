@@ -60,6 +60,19 @@ employRouter.patch('/reim/approval', async (req, res) => {
   }
 });
 
+employRouter.patch('/grade', async (req, res) => {
+  if(req.session.user) {
+    const {
+      reimID,
+      grade,
+    } = req.body;
+    userDao.updateToWaiting(reimID, 'PostApproval');
+    const d = await userDao.postGrade(reimID, grade);
+    console.log(d);
+    res.send(d);
+  }
+});
+
 employRouter.put('/reim', async (req, res) => {
   // const r = JSON.parse(req.body);
   console.log(req);
@@ -105,8 +118,10 @@ employRouter.patch('/prereim', async (req, res) => {
     let d;
     if(role === 'supervisor') {
       d = await userDao.updatePreApproval(reimID, 'DS_PreApproval', approve, reason);
+      userDao.updateToWaiting(reimID, 'DH_PreApproval');
     } else if(role === 'department head') {
       d = await userDao.updatePreApproval(reimID, 'DH_PreApproval', approve, reason);
+      userDao.updateToWaiting(reimID, 'Benco_PreApproval');
     } else {
       d = await userDao.updatePreApproval(reimID, 'Benco_PreApproval', approve, reason);
     }
