@@ -87,6 +87,27 @@ class UserDao {
     return [];
   }
 
+  async getReimGradeCheck(): Promise<Reim[]> {
+    const params = {
+      TableName: 'Reimbursement',
+      KeyConditionExpression: '#T = :u',
+      FilterExpression: '#G = :a',
+      ExpressionAttributeNames: {
+        '#T': 'Thing',
+        '#G': 'GradeCheck',
+      },
+      ExpressionAttributeValues: {
+        ':u': 'reimbursement',
+        ':a': 'waiting',
+      },
+    };
+    const data = await this.docClient.query(params).promise();
+    if(data.Items) {
+      return data.Items as Reim[];
+    }
+    return [];
+  }
+
   async updatePreApproval(id:string, who:string, change:string, reason:string): Promise<void> {
     const params = {
       TableName: 'Reimbursement',
@@ -125,6 +146,23 @@ class UserDao {
         ':r': reason,
         ':f': amount,
         ':e': empApproval,
+      },
+      ReturnValues: 'UPDATED_NEW',
+    };
+    const returned = await this.docClient.update(params).promise();
+    console.log(returned);
+  }
+
+  async updateGradeCheck(id:string, approve:string): Promise<void> {
+    const params = {
+      TableName: 'Reimbursement',
+      Key: {
+        'Thing': 'reimbursement',
+        'ID': id,
+      },
+      UpdateExpression: 'set GradeCheck=:a',
+      ExpressionAttributeValues: {
+        ':a': approve,
       },
       ReturnValues: 'UPDATED_NEW',
     };

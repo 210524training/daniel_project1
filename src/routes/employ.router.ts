@@ -26,6 +26,25 @@ employRouter.get('/reim/json', async (req, res) => {
   }
 });
 
+employRouter.get('/benco/reim/graded', async (req, res) => {
+  if(req.session.user) {
+    if(req.session.user.Role === 'benco') {
+      const data = await userDao.getReimGradeCheck();
+      res.json({ res: data });
+    }
+  }
+});
+
+employRouter.patch('/benco/reim/graded', async (req, res) => {
+  const { id, approve } = req.body;
+  if(req.session.user) {
+    if(req.session.user.Role === 'benco') {
+      const data = await userDao.updateGradeCheck(id, approve);
+      res.json({ res: data });
+    }
+  }
+});
+
 employRouter.put('/reim', async (req, res) => {
   // const r = JSON.parse(req.body);
   console.log(req);
@@ -89,7 +108,14 @@ employRouter.patch('/postreim', async (req, res) => {
       reason,
       finalAmount,
     } = req.body;
-    const d = await userDao.updatePostApproval(reimID, finalAmount, approve, reason);
+    const reim = await userDao.getReim(reimID);
+    let empApproval = 'approved';
+    if(reim) {
+      if(reim.Details.TrueCost < finalAmount) {
+        empApproval = 'waiting';
+      }
+    }
+    const d = await userDao.updatePostApproval(reimID, finalAmount, approve, reason, empApproval);
     console.log(d);
     res.send(d);
   }

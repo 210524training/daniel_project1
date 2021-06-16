@@ -54,6 +54,17 @@ async function getPreApproval() {
   document.getElementById('preApprovals').innerHTML += JSON.stringify(obj.res, 2, '\n');
 }
 
+async function getReimGraded() {
+  const response = await fetch('http://localhost:3000/employee/benco/reim/graded', {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'GET',
+  });
+  const obj = await response.json();
+  document.getElementById('reimGraded').innerHTML += JSON.stringify(obj.res, 2, '\n');
+}
+
 async function preReim() {
   const reimID = document.getElementById('reimID');
   const approve = document.getElementById('approveOrNot');
@@ -84,6 +95,23 @@ async function postReim() {
       approve: approve.value,
       reason: reason.value,
       finalAmount: amount.value,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'PATCH',
+  });
+  alert(response.toString());
+  window.location.href = 'http://localhost:3000/employee';
+}
+
+async function gredeCheckBenco() {
+  const reimID = document.getElementById('reimID2');
+  const approve = document.getElementById('gradeCheck');
+  const response = await fetch('http://localhost:3000/employee/benco/reim/graded', {
+    body: JSON.stringify({
+      id: reimID.value,
+      approve: approve.value,
     }),
     headers: {
       'Content-Type': 'application/json',

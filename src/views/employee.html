@@ -106,6 +106,29 @@
         </div>
       </form>
     </div>
+    <br/>
+    <hr>
+    <br/>
+    <div id="reimGraded">
+      <h3>Graded Reims for Benco to Approve</h3>
+      <input type="submit" onclick="getReimGraded()" class="btn btn-primary col-sm-2" value="Fetch">
+    </div>
+    <div>
+      <h3>Grade Check for Benco</h3>
+      <form onsubmit="gradeCheckBenco(); return false">
+        <div class="form-group">
+          <label for="reimID2">Reimbursment ID:</label>
+          <input class="form-control" id="reimID2" name='reimID2'>
+          <br/>
+          <label for="postApprove">Approve</label>
+          <input type="radio" id="gradeCheck" name="gradeCheck" value="approved">
+          <label for="postApprove">Deny</label>
+          <input type="radio" id="gradeCheck" name="gradeCheck" value="denied">
+          <br/><br/>
+          <input type="submit" class="btn btn-primary col-sm-2" value="Submit">
+        </div>
+      </form>
+    </div>
   </div>
 
     <script src="js/nav.js"></script>
