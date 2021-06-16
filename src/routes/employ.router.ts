@@ -45,6 +45,21 @@ employRouter.patch('/benco/reim/graded', async (req, res) => {
   }
 });
 
+employRouter.get('/reim/approval', async (req, res) => {
+  if(req.session.user) {
+    const data = await userDao.getReimEmpApproval(req.session.user.ID);
+    res.json({ res: data });
+  }
+});
+
+employRouter.patch('/reim/approval', async (req, res) => {
+  const { id, approve } = req.body;
+  if(req.session.user) {
+    const data = await userDao.updateEmpApproval(id, approve);
+    res.json({ res: data });
+  }
+});
+
 employRouter.put('/reim', async (req, res) => {
   // const r = JSON.parse(req.body);
   console.log(req);

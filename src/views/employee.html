@@ -52,9 +52,32 @@
         </div>
       </form>
     </div>
-    <br/>
-    <hr>
-    <br/>
+    <div id="empApproval">
+      <h3>Reimbursments that needs Employee Approvals due to change in reward amount</h3>
+      <input type="submit" onclick="getReimEmployApporval()" class="btn btn-primary col-sm-2" value="Fetch">
+    </div>
+    <div>
+      <h3>Employ Cancel or approve different amount</h3>
+      <form onsubmit="updateEmpApproval(); return false">
+        <div class="form-group">
+          <label for="reimID3">Reimbursment ID:</label>
+          <input class="form-control" id="reimID3" name='reimID3'>
+          <br/>
+          <label>Approve</label>
+          <input type="radio" id="empApprove" value="approved">
+          <label>Cancel</label>
+          <input type="radio" id="empApprove" value="cancelled">
+          <br/><br/>
+          <label for="reason">Reason:</label>
+          <input class="form-control" id="reason" name='reason'>
+          <br/>
+          <input type="submit" class="btn btn-primary col-sm-2" value="Submit">
+        </div>
+      </form>
+    </div>
+      <br/>
+      <hr>
+      <br/>
     <div id="preApprovals">
       <h3>Pre-Approvals</h3>
       <input type="submit" onclick="getPreApproval()" class="btn btn-primary col-sm-2" value="Fetch">

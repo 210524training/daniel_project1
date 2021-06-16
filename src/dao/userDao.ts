@@ -87,6 +87,49 @@ class UserDao {
     return [];
   }
 
+  async getReimEmpApproval(userID:string): Promise<Reim[]> {
+    const params = {
+      TableName: 'Reimbursement',
+      KeyConditionExpression: '#T = :u',
+      FilterExpression: '#E=:a, #A=:p',
+      ExpressionAttributeNames: {
+        '#T': 'Thing',
+        '#E': 'EmpID',
+        '#A': 'EmpApproval',
+      },
+      ExpressionAttributeValues: {
+        ':u': 'reimbursement',
+        ':a': userID,
+        ':p': 'waiting',
+      },
+    };
+    const data = await this.docClient.query(params).promise();
+    if(data.Items) {
+      return data.Items as Reim[];
+    }
+    return [];
+  }
+
+  async updateEmpApproval(id:string, approve:string): Promise<void> {
+    const params = {
+      TableName: 'Reimbursement',
+      Key: {
+        'Thing': 'reimbursement',
+        'ID': id,
+      },
+      UpdateExpression: 'set  #W=:c',
+      ExpressionAttributeNames: {
+        '#W': 'EmpApproval',
+      },
+      ExpressionAttributeValues: {
+        ':c': approve,
+      },
+      ReturnValues: 'UPDATED_NEW',
+    };
+    const returned = await this.docClient.update(params).promise();
+    console.log(returned);
+  }
+
   async getReimGradeCheck(): Promise<Reim[]> {
     const params = {
       TableName: 'Reimbursement',

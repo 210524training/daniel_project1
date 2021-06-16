@@ -65,6 +65,34 @@ async function getReimGraded() {
   document.getElementById('reimGraded').innerHTML += JSON.stringify(obj.res, 2, '\n');
 }
 
+async function getReimEmployApproval() {
+  const response = await fetch('http://localhost:3000/employee/reim/approval', {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'GET',
+  });
+  const obj = await response.json();
+  document.getElementById('empApproval').innerHTML += JSON.stringify(obj.res, 2, '\n');
+}
+
+async function updateEmpApproval() {
+  const reimID = document.getElementById('reimID3');
+  const approve = document.getElementById('empApprove');
+  const response = await fetch('http://localhost:3000/employee//', {
+    body: JSON.stringify({
+      reimID: reimID.value,
+      approve: approve.value,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'PATCH',
+  });
+  alert(response.toString());
+  window.location.href = 'http://localhost:3000/employee';
+}
+
 async function preReim() {
   const reimID = document.getElementById('reimID');
   const approve = document.getElementById('approveOrNot');
