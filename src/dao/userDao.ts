@@ -74,6 +74,46 @@ class UserDao {
     }
     return [];
   }
+
+  async updatePreApproval(id:string, who:string, change:string, reason:string): Promise<void> {
+    const params = {
+      TableName: 'Reimbursement',
+      Key: {
+        'Thing': 'reimbursement',
+        'ID': id,
+      },
+      UpdateExpression: 'set  #W=:c, Reason=:r',
+      ExpressionAttributeNames: {
+        '#W': who,
+      },
+      ExpressionAttributeValues: {
+        ':c': change,
+        ':r': reason,
+      },
+      ReturnValues: 'UPDATED_NEW',
+    };
+    const returned = await this.docClient.update(params).promise();
+    console.log(returned);
+  }
+
+  async updatePostApproval(id:string, amount:Number, approve:string, reason:string): Promise<void> {
+    const params = {
+      TableName: 'Reimbursement',
+      Key: {
+        'Thing': 'reimbursement',
+        'ID': id,
+      },
+      UpdateExpression: 'set  PostApproval=:a, FinalAmount=:f, Reason=:r',
+      ExpressionAttributeValues: {
+        ':a': approve,
+        ':r': reason,
+        ':f': amount,
+      },
+      ReturnValues: 'UPDATED_NEW',
+    };
+    const returned = await this.docClient.update(params).promise();
+    console.log(returned);
+  }
 }
 
 export default new UserDao();

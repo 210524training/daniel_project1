@@ -16,6 +16,7 @@
       <h1>Employee Portal</h1>
       <!-- <script src="../js/fetch.js"></script> -->
     </div>
+    <div style ='padding:1vw 20vw'>
     <div>
       <form onsubmit="sendReimRequest(); return false">
         <div class="form-group">
@@ -51,34 +52,61 @@
         </div>
       </form>
     </div>
-
+    <br/>
     <hr>
-
+    <br/>
     <div id="preApprovals">
       <h3>Pre-Approvals</h3>
       <input type="submit" onclick="getPreApproval()" class="btn btn-primary col-sm-2" value="Fetch">
     </div>
-
+    <br/>
     <hr>
-
+    <br/>
     <div>
       <h3>Approve Pre-Approvals</h3>
       <form onsubmit="preReim(); return false">
         <div class="form-group">
           <label for="reimID">Reimbursment ID:</label>
           <input class="form-control" id="reimID" name='reimID'>
-
-          <label for="approveOrNot">Approve or Deny</label>
+          <br/>
+          <label for="approveOrNot">Approve</label>
           <input type="radio" id="approveOrNot" name="approveOrNot" value="approve">
+          <label for="approveOrNot">Deny</label>
           <input type="radio" id="approveOrNot" name="approveOrNot" value="reject">
-
+          <br/><br/>
           <label for="reason">Reason:</label>
           <input class="form-control" id="reason" name='reason'>
-
+          <br/>
           <input type="submit" class="btn btn-primary col-sm-2" value="Submit">
         </div>
       </form>
     </div>
+    <br/>
+    <hr>
+    <br/>
+    <div>
+      <h3>Approve post-Approvals</h3>
+      <form onsubmit="postReim(); return false">
+        <div class="form-group">
+          <label for="reimID1">Reimbursment ID:</label>
+          <input class="form-control" id="reimID1" name='reimID1'>
+          <br/>
+          <label for="finalAmount">Final Amount:</label>
+          <input class="form-control" id="finalAmount" name='finalAmount'>
+          <br/>
+          <label for="postApprove">Approve</label>
+          <input type="radio" id="postApprove" name="postApprove" value="approve">
+          <label for="postApprove">Deny</label>
+          <input type="radio" id="postApprove" name="postApprove" value="reject">
+          <br/><br/>
+          <label for="reason">Reason:</label>
+          <input class="form-control" id="reason1" name='reason1'>
+          <br/>
+          <input type="submit" class="btn btn-primary col-sm-2" value="Submit">
+        </div>
+      </form>
+    </div>
+  </div>
 
     <script src="js/nav.js"></script>
     <script src="js/userinfo.js"></script>

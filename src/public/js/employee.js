@@ -67,9 +67,29 @@ async function preReim() {
     headers: {
       'Content-Type': 'application/json',
     },
-    method: 'PUT',
+    method: 'PATCH',
   });
-  // onst returnedData = await response.json();
-  alert('Success!');
+  alert(response.toString());
+  window.location.href = 'http://localhost:3000/employee';
+}
+
+async function postReim() {
+  const reimID = document.getElementById('reimID1');
+  const approve = document.getElementById('postApprove');
+  const reason = document.getElementById('reason1');
+  const amount = document.getElementById('finalAmount');
+  const response = await fetch('http://localhost:3000/employee/postreim/', {
+    body: JSON.stringify({
+      reimID: reimID.value,
+      approve: approve.value,
+      reason: reason.value,
+      finalAmount: amount.value,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'PATCH',
+  });
+  alert(response.toString());
   window.location.href = 'http://localhost:3000/employee';
 }

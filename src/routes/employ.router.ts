@@ -60,4 +60,39 @@ employRouter.put('/reim', async (req, res) => {
   }
 });
 
+employRouter.patch('/prereim', async (req, res) => {
+  if(req.session.user) {
+    const {
+      reimID,
+      approve,
+      reason,
+    } = req.body;
+    const role = req.session.user.Role;
+    let d;
+    if(role === 'supervisor') {
+      d = await userDao.updatePreApproval(reimID, 'DS_PreApproval', approve, reason);
+    } else if(role === 'department head') {
+      d = await userDao.updatePreApproval(reimID, 'DH_PreApproval', approve, reason);
+    } else {
+      d = await userDao.updatePreApproval(reimID, 'Benco_PreApproval', approve, reason);
+    }
+    console.log(d);
+    res.send(d);
+  }
+});
+
+employRouter.patch('/postreim', async (req, res) => {
+  if(req.session.user) {
+    const {
+      reimID,
+      approve,
+      reason,
+      finalAmount,
+    } = req.body;
+    const d = await userDao.updatePostApproval(reimID, finalAmount, approve, reason);
+    console.log(d);
+    res.send(d);
+  }
+});
+
 export default employRouter;
