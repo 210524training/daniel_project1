@@ -15,7 +15,7 @@ export default class Reimbursement {
       public Benco_PreApproval = 'waiting' || 'rejected' || 'approved' || 'not yet' || 'cancelled',
       public PostApproval = 'waiting' || 'rejected' || 'approved' || 'not yet',
       public FinalAmount:number,
-      public Difference:string,
+      public Difference:string, // needs to be added to dao
       public Reason: string,
       public EmpApproval = 'not yet' || 'waiting' || 'approved' || 'cancelled',
       public GradeCheck = 'not yet' || 'waiting' || 'approved' || 'denied',

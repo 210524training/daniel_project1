@@ -39,7 +39,7 @@ async function sendReimRequest() {
     method: 'PUT',
   });
   // onst returnedData = await response.json();
-  alert('Success!');
+  alert(response);
   window.location.href = 'http://localhost:3000/employee';
 }
 

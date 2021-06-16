@@ -22,6 +22,18 @@ class UserDao {
     return data.Item as User | undefined;
   }
 
+  async getReim(id:string): Promise<Reim | undefined> {
+    const params = {
+      TableName: 'Reimbursement',
+      Key: {
+        'Thing': 'reimbursement',
+        'ID': id,
+      },
+    };
+    const data = await this.docClient.get(params).promise();
+    return data.Item as Reim | undefined;
+  }
+
   async putReim(detail:Detail, empId:string): Promise<string> {
     const id = String(Math.floor(Math.random() * 100000));
     const params = {
@@ -96,18 +108,23 @@ class UserDao {
     console.log(returned);
   }
 
-  async updatePostApproval(id:string, amount:Number, approve:string, reason:string): Promise<void> {
+  async updatePostApproval(id:string,
+    amount:Number,
+    approve:string,
+    reason:string,
+    empApproval:string): Promise<void> {
     const params = {
       TableName: 'Reimbursement',
       Key: {
         'Thing': 'reimbursement',
         'ID': id,
       },
-      UpdateExpression: 'set  PostApproval=:a, FinalAmount=:f, Reason=:r',
+      UpdateExpression: 'set  PostApproval=:a, FinalAmount=:f, Reason=:r, EmpApproval=:e',
       ExpressionAttributeValues: {
         ':a': approve,
         ':r': reason,
         ':f': amount,
+        ':e': empApproval,
       },
       ReturnValues: 'UPDATED_NEW',
     };
