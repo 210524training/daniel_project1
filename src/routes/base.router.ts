@@ -9,21 +9,10 @@ baseRouter.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../views/index.html'));
 });
 
-baseRouter.get('/json', async (req, res) => {
-  console.log('Our callback was invoked!');
-  res.json({ data: 'This is sending back JSON' });
-  throw new Error('Something went wrong!');
-});
-
 export async function logout(req: express.Request, res: express.Response): Promise<void> {
-  if(req.session.user) {
-    const { ID } = req.session.user;
-    req.session.destroy(() => {
-      console.log(`${ID} logged out`);
-      res.sendFile(path.resolve(__dirname, '../views/logout.html'));
-    });
-  }
-  res.sendFile(path.resolve(__dirname, '../views/logout.html'));
+  req.session.destroy(() => {
+    res.send('logged out!');
+  });
 }
 
 baseRouter.use('/login', loginRouter);

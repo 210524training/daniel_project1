@@ -1,4 +1,5 @@
 import expressSession from 'express-session';
+import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
 import path from 'path';
@@ -10,6 +11,13 @@ import baseRouter from './routes/base.router';
 dotenv.config({});
 
 const app = express();
+
+app.use(cors({
+  credentials: true,
+  origin: [
+    process.env.WEB_CLIENT_ORIGIN || 'http://localhost:3000',
+  ],
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

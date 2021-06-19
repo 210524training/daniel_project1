@@ -11,7 +11,7 @@ employRouter.get('/', async (req, res) => {
   }
 });
 
-employRouter.get('/reim/json', async (req, res) => {
+employRouter.get('/super/prereim', async (req, res) => {
   if(req.session.user) {
     if(req.session.user.Role === 'supervisor') {
       const data = await userDao.getPreApproval('DS_PreApproval');
@@ -27,21 +27,17 @@ employRouter.get('/reim/json', async (req, res) => {
 });
 
 employRouter.get('/benco/reim/graded', async (req, res) => {
-  if(req.session.user) {
-    if(req.session.user.Role === 'benco') {
-      const data = await userDao.getReimGradeCheck();
-      res.json({ res: data });
-    }
+  if(req.session.user && req.session.user.Role === 'benco') {
+    const data = await userDao.getReimGradeCheck();
+    res.json({ res: data });
   }
 });
 
 employRouter.patch('/benco/reim/graded', async (req, res) => {
   const { id, approve } = req.body;
-  if(req.session.user) {
-    if(req.session.user.Role === 'benco') {
-      const data = await userDao.updateGradeCheck(id, approve);
-      res.json({ res: data });
-    }
+  if(req.session.user && req.session.user.Role === 'benco') {
+    const data = await userDao.updateGradeCheck(id, approve);
+    res.json({ res: data });
   }
 });
 
@@ -52,7 +48,7 @@ employRouter.get('/reim/approval', async (req, res) => {
   }
 });
 
-employRouter.patch('/reim/approval', async (req, res) => {
+employRouter.patch('/reim/changeapproval', async (req, res) => {
   const { id, approve } = req.body;
   if(req.session.user) {
     const data = await userDao.updateEmpApproval(id, approve);
@@ -60,7 +56,7 @@ employRouter.patch('/reim/approval', async (req, res) => {
   }
 });
 
-employRouter.patch('/grade', async (req, res) => {
+employRouter.patch('/reim/grade', async (req, res) => {
   if(req.session.user) {
     const {
       reimID,
@@ -77,7 +73,6 @@ employRouter.put('/reim', async (req, res) => {
   // const r = JSON.parse(req.body);
   console.log(req);
   const {
-    id,
     eventType,
     rawCost,
     startDate,
@@ -102,12 +97,13 @@ employRouter.put('/reim', async (req, res) => {
     []);
   console.log(detail);
   if(req.session.user) {
-    const daoRes = await userDao.putReim(detail, id);
+    console.log('logged in', req.session.user.ID);
+    const daoRes = await userDao.putReim(detail, req.session.user.ID);
     res.json({ submission: daoRes });
   }
 });
 
-employRouter.patch('/prereim', async (req, res) => {
+employRouter.patch('/super/prereim', async (req, res) => {
   if(req.session.user) {
     const {
       reimID,
@@ -130,7 +126,7 @@ employRouter.patch('/prereim', async (req, res) => {
   }
 });
 
-employRouter.patch('/postreim', async (req, res) => {
+employRouter.patch('/super/postreim', async (req, res) => {
   if(req.session.user) {
     const {
       reimID,

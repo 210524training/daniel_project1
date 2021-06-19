@@ -86,23 +86,26 @@ class UserDao {
     console.log(returned);
   }
 
-  async getPreApproval(role:string): Promise<Reim[]> {
+  async getPreApproval(role:string) {
     const params = {
       TableName: 'Reimbursement',
+      ProjectionExpression: '#ID, Details',
       KeyConditionExpression: '#T = :u',
-      FilterExpression: '#R = :a',
+      FilterExpression: '#R=:aa',
       ExpressionAttributeNames: {
         '#T': 'Thing',
         '#R': role,
+        '#ID': 'ID',
       },
       ExpressionAttributeValues: {
         ':u': 'reimbursement',
-        ':a': 'waiting',
+        ':aa': 'waiting',
       },
     };
     const data = await this.docClient.query(params).promise();
+    console.log(data);
     if(data.Items) {
-      return data.Items as Reim[];
+      return data.Items;
     }
     return [];
   }
@@ -150,9 +153,10 @@ class UserDao {
     console.log(returned);
   }
 
-  async getReimGradeCheck(): Promise<Reim[]> {
+  async getReimGradeCheck() {
     const params = {
       TableName: 'Reimbursement',
+      ProjectionExpression: '#ID, GradeSubmission, PassedOrNot, Details',
       KeyConditionExpression: '#T = :u',
       FilterExpression: '#G = :a',
       ExpressionAttributeNames: {
@@ -166,7 +170,7 @@ class UserDao {
     };
     const data = await this.docClient.query(params).promise();
     if(data.Items) {
-      return data.Items as Reim[];
+      return data.Items;
     }
     return [];
   }
