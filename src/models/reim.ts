@@ -7,7 +7,7 @@ export default class Reimbursement {
       public EmpID: string,
       public Details: detail,
       public Urgent: boolean,
-      public GradeSubmission: string,
+      public gradeSubmission: string,
       public PassedOrNot = 'passed' || 'failed' || 'waiting',
       public Supervisor = 'department head' || 'supervisor',
       public DS_PreApproval = 'waiting' || 'rejected' || 'approved',
